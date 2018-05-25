@@ -26,6 +26,14 @@ variable project_id {}
 variable storage_bucket {}
 variable kms_keyring_name {}
 
+variable ha_enabled {
+  default = "false"
+}
+
+variable ha_size {
+  default = "1"
+}
+
 provider google {
   region = "${var.region}"
 }
@@ -40,4 +48,6 @@ module "vault" {
   storage_bucket       = "${var.storage_bucket}"
   kms_keyring_name     = "${var.kms_keyring_name}"
   force_destroy_bucket = true
+  ha_enabled           = "${var.ha_enabled}"
+  ha_size              = "${var.ha_size}"
 }

@@ -13,9 +13,13 @@ cd /tmp && \
 # Install Stackdriver for logging
 curl -sSL https://dl.google.com/cloudagents/install-logging-agent.sh | bash
 
+# Get External IP
+EXTERNAL_IP=$(curl -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
+
 # Vault config
 mkdir -p /etc/vault
 cat - > /etc/vault/config.hcl <<'EOF'
+api_addr = "${EXTERNAL_IP}"
 ${config}
 EOF
 chmod 0600 /etc/vault/config.hcl

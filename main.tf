@@ -37,6 +37,7 @@ data "template_file" "vault-config" {
 
   vars {
     storage_bucket = "${google_storage_bucket.vault.name}"
+    ha_enabled     = "${var.ha_enabled}"
   }
 }
 
@@ -58,7 +59,7 @@ module "vault-server" {
     "https://www.googleapis.com/auth/devstorage.full_control",
   ]
 
-  size              = 1
+  size              = "${var.ha_size}"
   service_port      = "80"
   service_port_name = "hc"
   startup_script    = "${data.template_file.vault-startup-script.rendered}"

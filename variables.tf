@@ -106,3 +106,13 @@ variable tls_ou {
   description = "The TLS Organizational Unit for the TLS certificate"
   default     = "IT Security Operations"
 }
+
+variable ha_enabled {
+  description = "Enable HA mode of Vault"
+  default = "false"
+}
+
+variable ha_size {
+  description = "Number of nodes for HA"
+  default = "1"
+}

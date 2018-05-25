@@ -5,7 +5,7 @@ apt-get install -y unzip jq netcat nginx
 
 # Download and install Vault
 cd /tmp && \
-  curl -sLO https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/vault/ent/0.10.1/vault-enterprise_0.10.1%2Bent_linux_amd64.zip && \
+  curl -sLO https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/vault/ent/0.10.1/vault-enterprise_0.10.1+ent_linux_amd64.zip && \
   unzip vault-enterprise_0.10.1+ent_linux_amd64.zip && \
   mv vault /usr/local/bin/vault && \
   rm vault-enterprise_0.10.1+ent_linux_amd64.zip
@@ -19,7 +19,7 @@ EXTERNAL_IP=$(curl -H "Metadata-Flavor: Google" http://metadata/computeMetadata/
 # Vault config
 mkdir -p /etc/vault
 cat - > /etc/vault/config.hcl <<'EOF'
-api_addr = "${EXTERNAL_IP}"
+api_addr = "$${EXTERNAL_IP}"
 ${config}
 EOF
 chmod 0600 /etc/vault/config.hcl

@@ -5,7 +5,7 @@ apt-get install -y unzip jq netcat nginx
 
 # Download and install Vault
 cd /tmp && \
-  curl -sLO https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/vault/ent/0.10.1/vault-enterprise_0.10.1+ent_linux_amd64.zip && \
+  gsutil cp gs://harmonic-vault-vault-image/vault-enterprise_0.10.1+ent_linux_amd64.zip . && \
   unzip vault-enterprise_0.10.1+ent_linux_amd64.zip && \
   mv vault /usr/local/bin/vault && \
   rm vault-enterprise_0.10.1+ent_linux_amd64.zip

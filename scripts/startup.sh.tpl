@@ -5,10 +5,10 @@ apt-get install -y unzip jq netcat nginx
 
 # Download and install Vault
 cd /tmp && \
-  curl -sLO https://releases.hashicorp.com/vault/${vault_version}/vault_${vault_version}_linux_amd64.zip && \
-  unzip vault_${vault_version}_linux_amd64.zip && \
+  curl -sLO https://s3-us-west-2.amazonaws.com/hc-enterprise-binaries/vault/ent/0.10.1/vault-enterprise_0.10.1%2Bent_linux_amd64.zip && \
+  unzip vault-enterprise_0.10.1+ent_linux_amd64.zip && \
   mv vault /usr/local/bin/vault && \
-  rm vault_${vault_version}_linux_amd64.zip
+  rm vault-enterprise_0.10.1+ent_linux_amd64.zip
 
 # Install Stackdriver for logging
 curl -sSL https://dl.google.com/cloudagents/install-logging-agent.sh | bash

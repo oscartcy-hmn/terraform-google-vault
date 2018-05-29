@@ -164,6 +164,14 @@ data "google_iam_policy" "vault" {
       "serviceAccount:${google_service_account.vault-admin.email}",
     ]
   }
+
+  binding {
+    role = "roles/viewer"
+
+    members = [
+      "serviceAccount:${google_service_account.vault-admin.email}",
+    ]
+  }
 }
 
 // TLS resources

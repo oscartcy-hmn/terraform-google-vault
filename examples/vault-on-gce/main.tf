@@ -34,6 +34,16 @@ variable ha_size {
   default = "1"
 }
 
+variable vault_license_key {
+  description = "Vault license key"
+  default = ""
+}
+
+variable vault_image {
+  description = "Vault image file name"
+  default = ""
+}
+
 provider google {
   region = "${var.region}"
 }
@@ -50,4 +60,6 @@ module "vault" {
   force_destroy_bucket = true
   ha_enabled           = "${var.ha_enabled}"
   ha_size              = "${var.ha_size}"
+  vault_image          = "${var.vault_image}"
+  vault_license_key    = "${var.vault_license_key}"
 }

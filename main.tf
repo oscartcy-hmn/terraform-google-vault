@@ -30,6 +30,8 @@ data "template_file" "vault-startup-script" {
     vault_tls_key         = "${google_storage_bucket_object.vault-tls-key.name}"
     vault_tls_cert        = "${google_storage_bucket_object.vault-tls-cert.name}"
     vault_license_key     = "${var.vault_license_key}"
+    vault_image           = "${var.vault_image}"
+    storage_bucket        = "${var.storage_bucket}"
   }
 }
 

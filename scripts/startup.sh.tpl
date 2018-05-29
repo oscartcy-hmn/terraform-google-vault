@@ -5,10 +5,10 @@ apt-get install -y unzip jq netcat nginx
 
 # Download and install Vault
 cd /tmp && \
-  gsutil cp gs://harmonic-vault-vault-image/vault-enterprise_0.10.1+ent_linux_amd64.zip . && \
-  unzip vault-enterprise_0.10.1+ent_linux_amd64.zip && \
+  gsutil cp gs://${storage_bucket}-image/${vault_image} . && \
+  unzip ${vault_image} && \
   mv vault /usr/local/bin/vault && \
-  rm vault-enterprise_0.10.1+ent_linux_amd64.zip
+  rm ${vault_image}
 
 # Install Stackdriver for logging
 curl -sSL https://dl.google.com/cloudagents/install-logging-agent.sh | bash

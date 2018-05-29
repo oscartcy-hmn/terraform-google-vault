@@ -18,3 +18,5 @@ seal "gcpckms" {
   key_ring    = "vault"
   crypto_key  = "vault-auto-unseal"
 }
+
+ui = true

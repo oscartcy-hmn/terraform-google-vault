@@ -121,3 +121,8 @@ variable vault_license_key {
   description = "Vault license key"
   default = ""
 }
+
+variable vault_image {
+  description = "Vault image file name"
+  default = ""
+}

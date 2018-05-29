@@ -104,5 +104,14 @@ else
     --ciphertext-file=/tmp/vault_unseal_keys.txt.encrypted
 
   gsutil cp /tmp/vault_unseal_keys.txt.encrypted gs://${assets_bucket}
+
+  ROOT_TOKEN=$(cat /tmp/vault_unseal_keys.txt | grep "Initial Root Token: \K(.*)$" -Po)
+
   rm -f /tmp/vault_unseal_keys.txt*
+
+  # vault configuration
+  vault login $${ROOT_TOKEN}
+  vault write sys/license text=${vault_license_key}
+  vault audit-enable syslog
+
 fi

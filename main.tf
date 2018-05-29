@@ -29,6 +29,7 @@ data "template_file" "vault-startup-script" {
     vault_ca_cert         = "${google_storage_bucket_object.vault-ca-cert.name}"
     vault_tls_key         = "${google_storage_bucket_object.vault-tls-key.name}"
     vault_tls_cert        = "${google_storage_bucket_object.vault-tls-cert.name}"
+    vault_license_key     = "${var.vault_license_key}"
   }
 }
 
@@ -63,6 +64,7 @@ module "vault-server" {
   service_port      = "80"
   service_port_name = "hc"
   startup_script    = "${data.template_file.vault-startup-script.rendered}"
+  target_tags       = ["vault"]
 }
 
 resource "google_storage_bucket" "vault" {

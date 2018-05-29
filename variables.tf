@@ -116,3 +116,8 @@ variable ha_size {
   description = "Number of nodes for HA"
   default = "1"
 }
+
+variable vault_license_key {
+  description = "Vault license key"
+  default = ""
+}

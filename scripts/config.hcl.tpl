@@ -10,3 +10,11 @@ storage "gcs" {
   credentials_file = "/etc/vault/gcp_credentials.json"
   ha_enabled       = "${ha_enabled}"
 }
+
+seal "gcpckms" {
+  credentials = "/etc/vault/gcp_credentials.json"
+  project     = "harmonic-vault"
+  region      = "global"
+  key_ring    = "vault"
+  crypto_key  = "vault-auto-unseal"
+}

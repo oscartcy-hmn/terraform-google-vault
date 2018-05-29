@@ -110,7 +110,7 @@ else
   rm -f /tmp/vault_unseal_keys.txt*
 
   # vault configuration
-  vault login $${ROOT_TOKEN}
+  (while [[ $count -lt 15 && "($vault login $${ROOT_TOKEN} 2>&1)" =~ "local node not active but active cluster node not found" ]]; do ((count=count+1)) ; echo "$(date) $count: Waiting for Vault to login..." ; sleep 2; done && [[ $count -lt 15 ]])
   vault write sys/license text=${vault_license_key}
   vault audit-enable syslog
 

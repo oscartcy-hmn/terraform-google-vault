@@ -19,7 +19,7 @@ EXTERNAL_IP=$(curl -H "Metadata-Flavor: Google" http://metadata/computeMetadata/
 # Vault config
 mkdir -p /etc/vault
 cat - > /etc/vault/config.hcl <<EOF
-api_addr = "https://$${EXTERNAL_IP}"
+api_addr = "https://$${EXTERNAL_IP}:8200"
 EOF
 
 cat - >> /etc/vault/config.hcl <<'EOF'

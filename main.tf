@@ -69,16 +69,18 @@ module "vault-server" {
 }
 
 resource "google_storage_bucket" "vault" {
-  name     = "${var.storage_bucket}"
-  location = "US"
+  name          = "${var.storage_bucket}-${var.region}"
+  location      = "${var.region}"
+  storage_class = "REGIONAL"
 
   // delete bucket and contents on destroy.
   force_destroy = "${var.force_destroy_bucket}"
 }
 
 resource "google_storage_bucket" "vault-assets" {
-  name     = "${var.storage_bucket}-assets"
-  location = "US"
+  name          = "${var.storage_bucket}-${var.region}-assets"
+  location      = "${var.region}"
+  storage_class = "REGIONAL"
 
   // delete bucket and contents on destroy.
   force_destroy = "${var.force_destroy_bucket}"

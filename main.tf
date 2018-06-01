@@ -87,8 +87,8 @@ resource "google_storage_bucket" "vault-assets" {
 }
 
 resource "google_service_account" "vault-admin" {
-  account_id   = "vault-admin"
-  display_name = "Vault Admin"
+  account_id   = "vault-admin-${var.region}"
+  display_name = "Vault Admin (${var.region})"
 }
 
 resource "google_service_account_key" "vault-admin" {

@@ -38,8 +38,9 @@ data "template_file" "vault-config" {
   template = "${file("${format("%s/scripts/config.hcl.tpl", path.module)}")}"
 
   vars {
-    storage_bucket = "${google_storage_bucket.vault.name}"
+    storage_bucket = "${var.storage_bucket}"
     ha_enabled     = "${var.ha_enabled}"
+    region         = "${var.region}"
   }
 }
 
@@ -59,6 +60,7 @@ module "vault-server" {
     "https://www.googleapis.com/auth/cloud-platform",
     "https://www.googleapis.com/auth/monitoring.write",
     "https://www.googleapis.com/auth/devstorage.full_control",
+    "https://www.googleapis.com/auth/spanner.data",
   ]
 
   size              = "${var.ha_size}"
@@ -68,13 +70,20 @@ module "vault-server" {
   target_tags       = ["vault"]
 }
 
-resource "google_storage_bucket" "vault" {
-  name          = "${var.storage_bucket}-${var.region}"
-  location      = "${var.region}"
-  storage_class = "REGIONAL"
+resource "google_spanner_instance" "vault-instance" {
+  config       = "regional-${var.region}"
+  display_name = "vault-instance-${var.region}"
+  name = "vault-instance-${var.region}"
+  num_nodes = 1
+}
 
-  // delete bucket and contents on destroy.
-  force_destroy = "${var.force_destroy_bucket}"
+resource "google_spanner_database" "vault-database" {
+  instance  = "${google_spanner_instance.vault-instance.name}"
+  name      = "vault-database-${var.region}"
+  ddl       =  [
+    "CREATE TABLE Vault ( Key STRING(MAX) NOT NULL, Value BYTES(MAX), ) PRIMARY KEY (Key)",
+    "CREATE TABLE VaultHA ( Key STRING(MAX) NOT NULL, Value STRING(MAX), Identity STRING(36) NOT NULL, Timestamp TIMESTAMP NOT NULL, ) PRIMARY KEY (Key)"
+  ]
 }
 
 resource "google_storage_bucket" "vault-assets" {
@@ -172,6 +181,14 @@ data "google_iam_policy" "vault" {
 
   binding {
     role = "roles/viewer"
+
+    members = [
+      "serviceAccount:${google_service_account.vault-admin.email}",
+    ]
+  }
+
+  binding {
+    role = "roles/spanner.databaseUser"
 
     members = [
       "serviceAccount:${google_service_account.vault-admin.email}",

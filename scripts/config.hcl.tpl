@@ -4,9 +4,8 @@ listener "tcp" {
   tls_key_file = "/etc/vault/vault-server.key.pem"
 }
 
-storage "gcs" {
-  bucket           = "${storage_bucket}"
-  credentials_file = "/etc/vault/gcp_credentials.json"
+storage "spanner" {
+  database         = "projects/harmonic-vault/instances/vault-instance-${region}/databases/vault-database-${region}"
   ha_enabled       = "${ha_enabled}"
 }
 

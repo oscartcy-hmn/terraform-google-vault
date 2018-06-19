@@ -44,6 +44,11 @@ variable vault_image {
   default = ""
 }
 
+variable api_addr {
+  description = "Vault API address"
+  default = ""
+}
+
 provider google {
   region = "${var.region}"
 }
@@ -62,4 +67,5 @@ module "vault" {
   ha_size              = "${var.ha_size}"
   vault_image          = "${var.vault_image}"
   vault_license_key    = "${var.vault_license_key}"
+  api_addr             = "${var.api_addr}"
 }

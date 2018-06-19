@@ -126,3 +126,8 @@ variable vault_image {
   description = "Vault image file name"
   default = ""
 }
+
+variable api_addr {
+  description = "Vault API address"
+  default = ""
+}

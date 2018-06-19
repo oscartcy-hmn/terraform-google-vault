@@ -41,6 +41,7 @@ data "template_file" "vault-config" {
     storage_bucket = "${var.storage_bucket}"
     ha_enabled     = "${var.ha_enabled}"
     region         = "${var.region}"
+    api_addr       = "${var.api_addr}"
   }
 }
 
